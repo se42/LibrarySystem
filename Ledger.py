@@ -12,19 +12,19 @@ class Ledger:
 	def get_balance(self):
 		return '$50'
 
-	def make_line_item(self, chk_line_item):
+	def make_line_item(self, checkout):
 		# called by the CheckoutLineItem class upon instantiation
 		# to ensure CheckoutLineItem is linked to a LedgerLineItem
 		self._next_line_num += 1
-		return LedgerLineItem(self, _next_line_num, chk_line_item)
+		return LedgerLineItem(self, _next_line_num, checkout)
 
 
 class LedgerLineItem:
 	"""docstring for LedgerLineItem"""
-	def __init__(self, ledger, line_number, chk_line_item):
+	def __init__(self, ledger, line_number, checkout):
 		self.ledger = ledger
 		self.line_number = line_number
-		self.checkout_line_item = chk_line_item
+		self.checkout = checkout
 		self.amount_paid = 0
 
 		self._fine_amount = 0
@@ -49,11 +49,11 @@ class LedgerLineItem:
 		self._fine_amount = value
 
 	def _calculate_fine(self):
-		days = (datetime.date.today() - self.checkout_line_item.due_date).days
+		days = (datetime.date.today() - self.checkout.due_date).days
 		if days < 1:
 			return 0
 		else:
-			max_fine = self.checkout_line_item.item.title.value
+			max_fine = self.checkout.item.title.value
 			calc_fine = days * 0.10
 			return min([max_fine, calc_fine])
 	
