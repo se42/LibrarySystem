@@ -8,6 +8,12 @@ class Order:
 
 	_order_numbers = [10000]
 
+	@classmethod
+	def _next_order_number(cls):
+		next_num = max(cls._order_numbers) + 1
+		cls._order_numbers.append(next_num)
+		return next_num
+
 	def __init__(self, patron, date_f=datetime.date.today):
 		self.patron = patron
 		self.order_date = date_f()
@@ -15,12 +21,6 @@ class Order:
 		self.line_items = []
 
 		self._next_line_number = 1
-
-	@classmethod
-	def _next_order_number(cls):
-		next_num = max(cls._order_numbers) + 1
-		cls._order_numbers.append(next_num)
-		return next_num
 
 	def new_checkout(self):
 		if self.checkout_approval():
