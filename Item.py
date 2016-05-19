@@ -29,7 +29,7 @@ class Title:
 		self.period = datetime.timedelta(weeks=3)
 		self.items = []
 
-		self.commands = ['new_items']
+		self.commands = ['display','title', 'value', 'loanable', 'bestseller', 'period', 'items']
 
 		for each in range(num_items):
 			self.items.append(Item(self))
@@ -42,7 +42,7 @@ class Title:
 			news.append(new)
 		return news
 
-	def display(self):
+	def display(self, *args, **kwargs):
 		print(self.title)
 		print('\tTitle number:', self.title_number)
 		print('\tValue:', self.value)
